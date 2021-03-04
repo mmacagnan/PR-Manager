@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\PrManager.BL\PrManager.BL.csproj" />
+      <ProjectReference Include="..\PrManager.DAL\PrManager.DAL.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Remove="wwwroot\js\site.js" />
+    </ItemGroup>
+
+</Project>
