@@ -11,11 +11,11 @@ namespace PrManager.UI.Middlewares
     /// id. If don't and he try to login, we must
     /// take him to other page
     /// </summary>
-    public class HaveCongregationMiddleware
+    public class HavePublicatorMiddleware
     {
         private readonly RequestDelegate _next;
 
-        public HaveCongregationMiddleware(RequestDelegate next) => _next = next;
+        public HavePublicatorMiddleware(RequestDelegate next) => _next = next;
 
         public async Task Invoke(HttpContext context)
         {
@@ -40,11 +40,11 @@ namespace PrManager.UI.Middlewares
     /// <summary>
     /// Extension for the middleware usage
     /// </summary>
-    public static class UseHaveCongregationMiddlewareExtension
+    public static class UseHavePublicatorMiddlewareExtension
     {
-        public static IApplicationBuilder UseHaveCongregationMiddleware(this IApplicationBuilder builder)
+        public static IApplicationBuilder UseHavePublicatorMiddleware(this IApplicationBuilder builder)
         {
-            return builder.UseMiddleware<HaveCongregationMiddleware>();
+            return builder.UseMiddleware<HavePublicatorMiddleware>();
         }
     }
 }
