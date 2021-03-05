@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,22 +32,33 @@ namespace PrManager.UI
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
             );
-
+            
             services.Configure<CookiePolicyOptions>(options =>
             {
+                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            // services.AddAuthorization();
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(cookieOpt =>
+                .AddCookie(config =>
                 {
-                    cookieOpt.LoginPath = "/account/login";
-                    cookieOpt.LogoutPath = "/account/logout";
+                    // config.Cookie.Name = "UserLoginCookie";
+                    config.LoginPath = "/account/login";
+                    // config.AccessDeniedPath = "/account/denied";
                 });
-            services.AddRazorPages().AddRazorPagesOptions(options =>
+
+            services.AddRazorPages().AddRazorPagesOptions(config =>
             {
-                options.Conventions.AuthorizeFolder("/admin");
+                config.Conventions.AuthorizeFolder("/admin");
+            });
+            
+
+            services.Configure<RouteOptions>(options =>
+            {
+                options.LowercaseUrls = true;
+                options.LowercaseQueryStrings = true;
             });
         }
 
@@ -67,13 +79,14 @@ namespace PrManager.UI
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            
-            app.UseHavePublicatorMiddleware();
 
             app.UseRouting();
 
             app.UseAuthorization();
             app.UseAuthentication();
+            app.UseCookiePolicy();
+            
+            // app.UseHavePublicatorMiddleware();
             
 
             app.UseEndpoints(endpoints => { endpoints.MapRazorPages(); });

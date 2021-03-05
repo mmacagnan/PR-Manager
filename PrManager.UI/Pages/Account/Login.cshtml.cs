@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using PrManager.DAL;
+using PrManager.UI.Extensions;
 using PrManager.UI.Models;
 
 namespace PrManager.UI.Pages.Account
@@ -22,7 +23,6 @@ namespace PrManager.UI.Pages.Account
 
         public void OnGet()
         {
-            
         }
 
         public async Task<IActionResult> OnPost()
@@ -47,19 +47,13 @@ namespace PrManager.UI.Pages.Account
                 return Page();
             }
 
+            // var claimsIdentity = user.Identity();
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Sid, user.Id.ToString()),
-                new Claim(ClaimTypes.Name, user.UserName),
-                new Claim(ClaimTypes.GivenName, user.FirstName),
-                new Claim(ClaimTypes.Surname, user.LastName),
-                new Claim("PublicatorId", user.PublicatorId.ToString())
+                new Claim(ClaimTypes.Name, user.UserName)
             };
-
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
-                new ClaimsPrincipal(claimsIdentity));
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
 
             return RedirectToPage("/admin/dashboard");
         }

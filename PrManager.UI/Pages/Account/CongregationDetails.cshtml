@@ -1,0 +1,40 @@
+@page "/account/congregation-details"
+@model PrManager.UI.Pages.Account.CongregationDetails
+@{
+    Layout = "Shared/_LayoutAuth";
+    ViewData["Title"] = "Add the congregational details";
+}
+
+<div class="card p-4">
+    <form method="post">
+        <div class="card-body">
+            <h1>Add congregation</h1>
+            <p class="text-muted">Add congregation details</p>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">
+                        <i class="icon-user"></i>
+                    </span>
+                </div>
+                <input asp-for="CongregationDetail.CongregationName" class="form-control" placeholder="Congregation name">
+                <span asp-validation-for="CongregationDetail.CongregationName" class="invalid-feedback"></span>
+            </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">
+                        <i class="icon-user"></i>
+                    </span>
+                </div>
+                <input asp-for="CongregationDetail.CongregationNumber" class="form-control" placeholder="Congregation number">
+                <span asp-validation-for="CongregationDetail.CongregationNumber" class="invalid-feedback"></span>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <button type="submit" class="btn btn-primary px-4">Register</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
