@@ -13,4 +13,8 @@
       <Content Remove="wwwroot\js\site.js" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Core" />
+    </ItemGroup>
+
 </Project>
